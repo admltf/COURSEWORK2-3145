@@ -12,8 +12,8 @@
   },
   "author": "adam latif",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/admltf/COURSEWORK2-3145/issues"
-  },
-  "homepage": "https://github.com/admltf/COURSEWORK2-3145#readme"
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongodb": "^4.3.0"
+  }
 }

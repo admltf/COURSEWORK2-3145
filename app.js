@@ -16,10 +16,29 @@ app.param('collectionName', (req, res, next, collectionName) => {
     return next()
 })
 
+app.get('/', (req, res, next) => {
+    res.send('Select a collection. e.g., /collection/lessons')
+})
+
 app.get('/collection/:collectionName', (req, res, next) => {
     req.collection.find({}).toArray((e, results) => {
         if (e) return next(e)
         res.send(results)
+    })
+})
+
+app.post('/collection/:collectionName', (req, res, next) => {
+    req.collection.insertOne(req.body, (e, results) => {
+        if (e) return next(e)
+        res.send(results.ops)
+    })
+})
+
+const ObjectID = require('mongodb').ObjectId
+app.get('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) => {
+        if (e) return next (e)
+        res.send(result)
     })
 })
 

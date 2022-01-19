@@ -1,15 +1,31 @@
-const express = require('express')
-const http = require('http')
-const path = require("path")
+var express = require('express')
+var app = express()
 
-const app = express()
+app.use(express.json())
 
-app.use(function (req, res) {
-    console.log("In comes: " + req.url)
-    res.end("Adam")
+const MongoClient = require('mongodb').MongoClient
+
+let db 
+MongoClient.connect('mongodb+srv://admltf:Gunners23!@cluster0.ppm3u.mongodb.net/WEBAPP', 
+(err, client) => {
+    db = client.db('WEBAPP')
 })
 
-http.createServer(app).listen(3000)
+app.param('collectionName', (req, res, next, collectionName) => {
+    req.collection = db.collection(collectionName)
+    return next()
+})
+
+app.get('/collection/:collectionName', (req, res, next) => {
+    req.collection.find({}).toArray((e, results) => {
+        if (e) return next(e)
+        res.send(results)
+    })
+})
+
+app.listen(3000, function() {
+    console.log("Listening on 3000")
+})
 
 
 

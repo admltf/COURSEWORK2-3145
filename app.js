@@ -65,7 +65,8 @@ app.delete('/collection/:collectionName/:id', (req, res, next) => {
 })
 
 
-app.listen(3000, function() {
+const port = process.env.PORT || 3000
+app.listen(port, function() {
     console.log("Listening on 3000")
 })
 

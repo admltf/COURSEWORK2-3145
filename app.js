@@ -50,7 +50,7 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
         {safe: true, multi: false},
         (e, result) => {
             if (e) return next(e)
-            res.send(result.result.n === 1 ? {msg: 'success'} : {msg: 'error'})
+            res.send((result.result.n === 1) ? {msg: 'success'} : {msg: 'error'})
         }
     )
 }) 

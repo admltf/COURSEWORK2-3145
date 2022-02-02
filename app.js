@@ -12,6 +12,12 @@ MongoClient.connect('mongodb+srv://admltf:Gunners23!@cluster0.ppm3u.mongodb.net/
     db = client.db('WEBAPP')
 })
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
+
 app.param('collectionName', (req, res, next, collectionName) => {
     req.collection = db.collection(collectionName)
     return next()

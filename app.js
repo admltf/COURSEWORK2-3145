@@ -11,9 +11,6 @@ var path = require('path')
 
 const MongoClient = require('mongodb').MongoClient
 
-app.use(function(req, res, next) {
-    console.log("Incoming: " + req.method + " to " + req.url)
-})
 
 let db 
 MongoClient.connect('mongodb+srv://admltf:Gunners23!@cluster0.ppm3u.mongodb.net/WEBAPP', 
@@ -24,8 +21,13 @@ MongoClient.connect('mongodb+srv://admltf:Gunners23!@cluster0.ppm3u.mongodb.net/
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
-    next();
+    return next();
 });
+
+app.use(function(req, res, next) {
+    console.log("Incoming: " + req.method + " to " + req.url)
+    return next();
+})
 
 app.param('collectionName', (req, res, next, collectionName) => {
     req.collection = db.collection(collectionName)
